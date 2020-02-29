@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% if course_list %}
+
+                        <h2 class="text">Ваши учебные курсы</h2>
+                        <h6 class="text">Вы состоите в {{ course_list.count }} курсах</h6>
+                        {% for item_course in course_list %}
+                            <div class="col-lg-12">
+                                <div class="course-item">
+                                    <h4>{{ item_course.name_course }}</h4>
+                                    <div class="description-item">{{ item_course.description }}</div>
+                                    <div class="button-course">
+                                        <a href="{% url 'course' item_course.id %}">
+                                            <button type="button"  class="btn btn-outline-success">Подробнее</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                        <div class="text-danger">
+                        У вас нет учебных курсов {{ course_list}}
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -115,3 +115,4 @@ def test_rating(request):
     result.save(force_update=True)
 
     return render(request, 'course/select_answer.html', locals())
+#alert

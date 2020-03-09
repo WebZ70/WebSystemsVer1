@@ -25,7 +25,7 @@ SECRET_KEY = '3@op_-pj9@g(#s$#w$tyeh!%!x16ec48ulqwajmlbdgsd7mn=='
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ["webz70.pythonanywhere.com"]
 
 # Application definition

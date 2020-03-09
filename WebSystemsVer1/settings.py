@@ -22,11 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3@op_-pj9@g(#s$#w$tyeh!%!x16ec48ulqwajmlbdgsd7mn=='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ["webz70.pythonanywhere.com"]
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["webz70.pythonanywhere.com"]
 
 # Application definition
 
@@ -84,14 +84,14 @@ WSGI_APPLICATION = 'WebSystemsVer1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'HOTS': '127.0.0.1',
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'WebZ70$trainingsystem',
-        # 'USER': 'WebZ70',
-        # 'PASSWORD': 'piligrim1998',
-        # 'HOST': 'WebZ70.mysql.pythonanywhere-services.com',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'HOTS': '127.0.0.1',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'WebZ70$trainingsystem',
+        'USER': 'WebZ70',
+        'PASSWORD': 'piligrim1998',
+        'HOST': 'WebZ70.mysql.pythonanywhere-services.com',
     }
 }
 

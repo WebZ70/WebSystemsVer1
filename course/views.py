@@ -98,21 +98,24 @@ def test_rating(request):
         # created - False(объект найден) - True(не найден)
         # if not created:
         new_test.status = status
+        print(new_test)
         new_test.save(force_update=True)
 
     total_mark = 0
-    mark = Question.objects.filter(test_id=test_id)
-    count_answer_all = mark.count()
-    answer_all = Answer.objects.filter(status=True)
+    # кол-во правильных ответов в тесте
+    count_test = Test.objects.get(id=test_id).count_true_answer
+    # кортеж всех правильных ответов в тесте
+    answer_all = Answer.objects.filter(status=True, quest__test_id=test_id)
+    # ответы студента
     answer_student = AnswerStudent.objects.filter(status=True, name=request.user, test_id=test_id)
-    count_answer_true = answer_student.count()
+    # проверка правильности ответов
     for ans in answer_student:
         if ans.answer in answer_all:
-            total_mark += mark.get(id=ans.quest_id).mark_for_question
-
+            # кол-во правльных ответов
+            total_mark += 1
+    # добавление результата ответа, если его нет, иначе просто обновляет результат
     result, create = Result.objects.get_or_create(name=request.user, test_id=test_id)
-    result.total_mark = count_answer_true/count_answer_all*100
+    result.total_mark = total_mark/count_test*100
     result.save(force_update=True)
 
     return render(request, 'course/select_answer.html', locals())
-#alert

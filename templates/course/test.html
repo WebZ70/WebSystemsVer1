@@ -79,7 +79,15 @@
                                             <div class="tabs__pane" id="content-{{ num }}">
                                         {% endif %}
                                     <div class="course-item">
-
+                                        {% if item.questimage_set.all %}
+                                            {% for img in item.questimage_set.all %}
+                                                <img height="100px" width="150px" src="{% static img.image.url %}">
+                                            {% endfor %}
+                                        {% endif %}
+{#                                        {% for img in item.questimage_set.all %}#}
+{#                                            {% if  %}#}
+{#                                            <img height="100px" width="150px" src="{% static  %}">#}
+{#                                        {% endfor %}#}
                                         <h4>{{ item.question_text }}</h4>
 
                                         <div class="description-item">

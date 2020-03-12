@@ -5,7 +5,6 @@ from .models import *
 from module_test.models import *
 from django.contrib.auth.decorators import login_required
 from .permissions import UserPermissionsMixin
-from django.http import JsonResponse
 import re
 
 
@@ -47,9 +46,9 @@ def course(request, pk):
 @login_required
 def test(request, pk_course, str_test, pk_test):
     session_key = request.session.session_key
-    print(request.session.session_key)
     tests = Test.objects.get(pk=pk_test)
     quests = Question.objects.filter(test_id=pk_test)
+    quest_image = QuestImage.objects.filter(quest__test_id=pk_test)
     # answer = Answer.objects.filter(quest_id=1)
     return render(request, 'course/test.html', locals())
 
@@ -74,7 +73,7 @@ def test_rating(request):
         #     continue
 
         if re.findall(r'csrfmiddlewaretoken', key):
-            print('csrfmiddlewaretoken: ' + datadict.pop(key))
+            # print('csrfmiddlewaretoken: ' + datadict.pop(key))
             continue
 
         if [key] == re.findall(r'\d{1,3}\[key]', key):
@@ -98,7 +97,7 @@ def test_rating(request):
         # created - False(объект найден) - True(не найден)
         # if not created:
         new_test.status = status
-        print(new_test)
+        # print(new_test)
         new_test.save(force_update=True)
 
     total_mark = 0

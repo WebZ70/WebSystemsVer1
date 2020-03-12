@@ -11,14 +11,10 @@ class AnswerInline(admin.TabularInline):
     model = Answer
     extra = 0
 
-# class QuestionInTestInline(admin.TabularInline):
-#     model = QuestionInTest
-#     extra = 0
-#
-#
-# class AnswerToQuestInline(admin.TabularInline):
-#     model = AnswerToQuest
-#     extra = 0
+
+class QuestImageInline(admin.TabularInline):
+    model = QuestImage
+    extra = 0
 
 
 class TestAdmin(admin.ModelAdmin):
@@ -32,36 +28,15 @@ class TestAdmin(admin.ModelAdmin):
 admin.site.register(Test, TestAdmin)
 
 
-# class QuestionInTestAdmin(admin.ModelAdmin):
-#     list_display = [field.name for field in QuestionInTest._meta.fields]
-#
-#
-#     class Meta:
-#         model = QuestionInTest
-#
-#
-# admin.site.register(QuestionInTest, QuestionInTestAdmin)
-
-
 class QuestionAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Question._meta.fields]
-    inlines = [AnswerInline]
+    inlines = [AnswerInline, QuestImageInline]
 
     class Meta:
         model = Question
 
 
 admin.site.register(Question, QuestionAdmin)
-
-
-# class AnswerToQuestAdmin(admin.ModelAdmin):
-#     list_display = [field.name for field in AnswerToQuest._meta.fields]
-#
-#     class Meta:
-#         model = AnswerToQuest
-#
-#
-# admin.site.register(AnswerToQuest, AnswerToQuestAdmin)
 
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -92,3 +67,13 @@ class ResultAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Result, ResultAdmin)
+
+
+class QuestImageAdmin (admin.ModelAdmin):
+    list_display = [field.name for field in QuestImage._meta.fields]
+
+    class Meta:
+        model = QuestImage
+
+
+admin.site.register(QuestImage, QuestImageAdmin)

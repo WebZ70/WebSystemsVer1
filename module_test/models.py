@@ -34,6 +34,21 @@ class Question(models.Model):
         verbose_name_plural = "Вопросы"
 
 
+class QuestImage(models.Model):
+    quest = models.ForeignKey(Question, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='quest_images/', default=None)
+
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return "%s" % self.id
+
+    class Meta:
+        verbose_name = 'Картинка'
+        verbose_name_plural = 'Картинки'
+
+
 class Answer(models.Model):
     answer_text = models.CharField(max_length=256)
     quest = models.ForeignKey(Question, blank=True, null=True, default=None, on_delete=models.CASCADE)

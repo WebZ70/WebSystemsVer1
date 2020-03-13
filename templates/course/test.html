@@ -2,75 +2,15 @@
 {% load static %}
 
 {% block content %}
-    {#    {% if course_list %}#}
-{#    <div class="section section-test">#}
-{#        <div class="container">#}
-{#            <form action="{% url 'test-rating' %} " method="POST" id="form-test">{% csrf_token %}#}
-{#                <div class="row">#}
-{#                    <div class="col-lg-12">#}
-{##}
-{#                        <h2 class="text" data-test="{{ tests.pk }}">{{ tests.name_test }}</h2>#}
-{#                    </div>#}
-{##}
-{#                    {% for item in quests %}#}
-{#                        <div class="col-lg-3">#}
-{#                            <div class="course-item">#}
-{##}
-{#                                <h4>{{ item.question_text }}</h4>#}
-{#                                <div class="description-item">#}
-{##}
-{#                                    {% for quest_item in item.answer_set.all %}#}
-{#                                        <p>#}
-{#                                            <input#}
-{#                                                    type="checkbox"#}
-{#                                                    name="{{ item.id }}"#}
-{#                                                    id="{{ quest_item.id }}"#}
-{#                                                    data-answer="{{ quest_item.answer_text }}"#}
-{#                                                    data-test#}
-{#                                            >#}
-{#                                            {{ quest_item.answer_text }}#}
-{#                                        </p>#}
-{#                                    {% endfor %}#}
-{##}
-{#                                </div>#}
-{##}
-{#                                <div class="button-course">#}
-{#                                    <button type="button" class="btn btn-outline-success">Следующий вопрос</button>#}
-{#                                </div>#}
-{##}
-{#                            </div>#}
-{##}
-{#                        </div>#}
-{#                    {% endfor %}#}
-{##}
-{##}
-{#                </div>#}
-{##}
-{#                <div id="marks" class="text">#}
-{#                    <button type="submit" id="submit_btn" class="btn btn-success">#}
-{#                        <span>Отправить результат</span>#}
-{#                    </button>#}
-{#                </div>#}
-{#            </form>#}
-{##}
-{#        </div>#}
-{#    </div>#}
-
-    {#    {% else %}#}
-    {#        <p>У вас нет учебных курсов</p>#}
-    {#    {% endif %}#}
-
     <div class="section section-test">
         <div class="container">
             <form action="{% url 'test-rating' %} " method="POST" id="form-test">{% csrf_token %}
                 <div class="row">
                     {#заголовок #}
                     <div class="col-lg-12">
-                        <h2 class="text" data-test="{{ tests.pk }}">{{ tests.name_test }}</h2>
-                    </div>
-                    <div class="col-lg-12">
                         <div class="tabs">
                             <div class="tabs__content">
+                            <h2 class="text" data-test="{{ tests.pk }}">{{ tests.name_test }}</h2>
                                 {% for item in quests %}
                                     {% with num=forloop.counter %}
                                         {% if num == 1 %}
@@ -78,51 +18,68 @@
                                         {% else %}
                                             <div class="tabs__pane" id="content-{{ num }}">
                                         {% endif %}
-                                    <div class="course-item">
-                                        {% if item.questimage_set.all %}
-                                            {% for img in item.questimage_set.all %}
-                                                <img height="100px" width="150px" src="{% static img.image.url %}">
-                                            {% endfor %}
-                                        {% endif %}
-{#                                        {% for img in item.questimage_set.all %}#}
-{#                                            {% if  %}#}
-{#                                            <img height="100px" width="150px" src="{% static  %}">#}
-{#                                        {% endfor %}#}
-                                        <h4>{{ item.question_text }}</h4>
+                                    <div class="row course-item">
 
-                                        <div class="description-item">
+                                        <div class="col-md-12 overflow-hidden">
+                                            {% if item.questimage_set.all %}
+                                                {% for img in item.questimage_set.all %}
+                                                    <img height="80px" src="{% static img.image.url %}">
+                                                {% endfor %}
+                                            {% endif %}
+                                            {#                                        {% for img in item.questimage_set.all %}#}
+                                            {#                                            {% if  %}#}
+                                            {#                                            <img height="100px" width="150px" src="{% static  %}">#}
+                                            {#                                        {% endfor %}#}
+                                            <h4 class="text-left">{{ item.question_text }}</h4>
 
-                                            {% for quest_item in item.answer_set.all %}
-                                                <p>
-                                                    <input
-                                                            type="checkbox"
-                                                            name="{{ item.id }}"
-                                                            id="{{ quest_item.id }}"
-                                                            data-answer="{{ quest_item.answer_text }}"
-                                                            data-test
-                                                    >
+                                            <div class="description-item">
+
+                                                {% for quest_item in item.answer_set.all %}
+                                                    <p class="text-left ml-5">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="{{ item.id }}"
+                                                                id="{{ quest_item.id }}"
+                                                                data-answer="{{ quest_item.answer_text }}"
+                                                                data-test
+                                                        >
                                                     {{ quest_item.answer_text }}
-                                                </p>
-                                            {% endfor %}
+                                                        {% if quest_item.image %}
+                                                            <img height="75px" src="{% static quest_item.image.url %}">
+                                                    {% endif %}
 
+                                                    </p>
+                                                {% endfor %}
+
+                                            </div>
                                         </div>
-
                                     </div>
                                     </div>
                                     {% endwith %}
                                 {% endfor %}
                                 </div>
+                                {# Кнопки навигации #}
+{#                                                                <div class="row justify-content-between">#}
+{#                                                                    <div class="col-md-3 ">#}
+{#                                                                        <button class="tabs__link btn btn-f my-btn"#}
+{#                                                                                href="#content-2">Назад</button>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="col-md-3 ">#}
+{#                                                                        <button class="tabs__link btn btn-f my-btn"#}
+{#                                                                                href="#content-3">Далее</button>#}
+{#                                                                    </div>#}
+{#                                                                </div>#}
                                 <div class="tabs__nav">
 
                                     {% for item in quests %}
                                         {% with num=forloop.counter %}
                                             {% if num == 1 %}
-                                                <button class="tabs__link tabs__link_active btn my-btn"
-                                                        href="#content-{{ num }}">Вкладка {{ num }}
+                                                <button class="tabs__link tabs__link_active btn "
+                                                        href="#content-{{ num }}">{{ num }}
                                                 </button>
                                             {% else %}
-                                                <button class="tabs__link tabs__link_active btn my-btn"
-                                                        href="#content-{{ num }}">Вкладка {{ num }}
+                                                <button class="tabs__link btn"
+                                                        href="#content-{{ num }}">{{ num }}
                                                 </button>
                                             {% endif %}
                                         {% endwith %}
@@ -131,13 +88,13 @@
                             </div>
                         </div>
 
+                        <div id="marks" class="col-md-12 text">
+                            <button type="submit" id="submit_btn" class="btn btn-success">
+                                <span>Отправить результат</span>
+                            </button>
+                        </div>
+                    </div>
 
-                    </div>
-                    <div id="marks" class="text">
-                        <button type="submit" id="submit_btn" class="btn btn-success">
-                            <span>Отправить результат</span>
-                        </button>
-                    </div>
             </form>
         </div>
     </div>

@@ -45,12 +45,13 @@ class QuestImage(models.Model):
         return "%s" % self.id
 
     class Meta:
-        verbose_name = 'Картинка'
-        verbose_name_plural = 'Картинки'
+        verbose_name = 'Картинка вопроса'
+        verbose_name_plural = 'Картинки вопроса'
 
 
 class Answer(models.Model):
     answer_text = models.CharField(max_length=256)
+    image = models.ImageField(upload_to='answer_images/', default=None, null=True, blank=True)
     quest = models.ForeignKey(Question, blank=True, null=True, default=None, on_delete=models.CASCADE)
     status = models.BooleanField(null=False, blank=False, default=False)
 
@@ -61,13 +62,20 @@ class Answer(models.Model):
         verbose_name = "Ответ"
         verbose_name_plural = "Ответы"
 
-    # def save(self, *args, **kwargs):
-    #     quest = Test.objects.get(id=self.quest.test.id)
-    #     if self.status:
-    #         quest.count_true_answer += 1
-    #     quest.save(force_update=True)
-    #
-    #     super(Answer, self).save(*args, **kwargs)
+
+# class AnswerImage(models.Model):
+#     answer = models.ForeignKey(Answer, blank=True, null=True, default=None, on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to='answer_images/', default=None)
+#
+#     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+#
+#     def __str__(self):
+#         return "%s" % self.id
+#
+#     class Meta:
+#         verbose_name = 'Картинка ответа'
+#         verbose_name_plural = 'Картинки ответа'
 
 
 def answer_post_save(sender, instance, created, **kwargs):

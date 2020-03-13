@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //ф-ия отправки на сервер результатов обучающего теста
-    form = $('#form-test');
+    var form = $('#form-test');
     var status = false, id_quest, answer, id_answer;
     var url = form.attr("action");
     tmp = false
@@ -37,7 +37,7 @@ $(document).ready(function () {
                 const btn = document.querySelector('.btn > span');
                 btn.innerHTML = "Результаты успешно отправлены"
 
-                $('#marks').addClass("success-result")
+                $('#submit_btn').addClass("sub-btn")
                 $('#submit_btn').attr("disabled", true)
 
             },

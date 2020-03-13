@@ -49,6 +49,7 @@ def test(request, pk_course, str_test, pk_test):
     tests = Test.objects.get(pk=pk_test)
     quests = Question.objects.filter(test_id=pk_test)
     quest_image = QuestImage.objects.filter(quest__test_id=pk_test)
+    # answer_image = AnswerImage.objects.filter(answer__quest__test_id=pk_test)
     # answer = Answer.objects.filter(quest_id=1)
     return render(request, 'course/test.html', locals())
 
@@ -100,21 +101,42 @@ def test_rating(request):
         # print(new_test)
         new_test.save(force_update=True)
 
+    # блок начисления баллов
     total_mark = 0
-    # кол-во правильных ответов в тесте
-    count_test = Test.objects.get(id=test_id).count_true_answer
-    # кортеж всех правильных ответов в тесте
-    answer_all = Answer.objects.filter(status=True, quest__test_id=test_id)
+    mark = 0
+    # кол-во вопросов
+    count_quests = Question.objects.filter(test_id=test_id).count()
+    # кортеж всех ответов в тесте
+    answer_all = Answer.objects.filter(quest__test_id=test_id)
     # ответы студента
     answer_student = AnswerStudent.objects.filter(status=True, name=request.user, test_id=test_id)
+
     # проверка правильности ответов
-    for ans in answer_student:
-        if ans.answer in answer_all:
-            # кол-во правльных ответов
+    old_id = 0
+    for ans in answer_student.select_related('quest'):
+        quest_id = ans.quest.id
+        if old_id == quest_id:
+            continue
+
+        count_aqs = AnswerStudent.objects.filter(quest_id=quest_id, status=True)
+        count_aq = Answer.objects.filter(quest_id=quest_id, status=True)
+        if count_aqs.count() != count_aq.count():
+            continue
+
+        for item in count_aqs:
+            if item.answer in count_aq:
+                mark += 1
+
+        if count_aq.count() == mark:
+            # print("Ответ правильный: "+str(quest_id))
             total_mark += 1
+        old_id = quest_id
+        mark = 0
+    # print(total_mark)
+    # конец блока начисления ответов
     # добавление результата ответа, если его нет, иначе просто обновляет результат
     result, create = Result.objects.get_or_create(name=request.user, test_id=test_id)
-    result.total_mark = total_mark/count_test*100
+    result.total_mark = total_mark/count_quests*100
     result.save(force_update=True)
 
     return render(request, 'course/select_answer.html', locals())

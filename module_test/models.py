@@ -9,7 +9,6 @@ from django.dispatch import receiver
 
 class Test(models.Model):
     name_test = models.CharField(max_length=48)
-    count_true_answer = models.DecimalField(max_digits=1, decimal_places=0, default=0)
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
@@ -61,31 +60,6 @@ class Answer(models.Model):
     class Meta:
         verbose_name = "Ответ"
         verbose_name_plural = "Ответы"
-
-
-# class AnswerImage(models.Model):
-#     answer = models.ForeignKey(Answer, blank=True, null=True, default=None, on_delete=models.CASCADE)
-#     image = models.ImageField(upload_to='answer_images/', default=None)
-#
-#     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-#     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-#
-#     def __str__(self):
-#         return "%s" % self.id
-#
-#     class Meta:
-#         verbose_name = 'Картинка ответа'
-#         verbose_name_plural = 'Картинки ответа'
-
-
-def answer_post_save(sender, instance, created, **kwargs):
-    # quest = Question.objects.filter(test_id=instance.quest.test.id)
-    answer = Answer.objects.filter(status=True, quest__test_id=instance.quest.test.id).count()
-    instance.quest.test.count_true_answer = answer
-    instance.quest.test.save(force_update=True)
-
-
-post_save.connect(answer_post_save, sender=Answer)
 
 
 class AnswerStudent(models.Model):

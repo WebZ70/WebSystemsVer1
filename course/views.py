@@ -98,6 +98,7 @@ def test_rating(request):
         # created - False(объект найден) - True(не найден)
         # if not created:
         new_test.status = status
+        # new_test.result
         # print(new_test)
         new_test.save(force_update=True)
 
@@ -118,7 +119,7 @@ def test_rating(request):
         if old_id == quest_id:
             continue
 
-        count_aqs = AnswerStudent.objects.filter(quest_id=quest_id, status=True)
+        count_aqs = AnswerStudent.objects.filter(name=request.user, quest_id=quest_id, status=True)
         count_aq = Answer.objects.filter(quest_id=quest_id, status=True)
         if count_aqs.count() != count_aq.count():
             continue
@@ -132,7 +133,8 @@ def test_rating(request):
             total_mark += 1
         old_id = quest_id
         mark = 0
-    # print(total_mark)
+    print(total_mark)
+    print(total_mark/count_quests*100)
     # конец блока начисления ответов
     # добавление результата ответа, если его нет, иначе просто обновляет результат
     result, create = Result.objects.get_or_create(name=request.user, test_id=test_id)

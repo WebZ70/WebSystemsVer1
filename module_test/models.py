@@ -62,22 +62,6 @@ class Answer(models.Model):
         verbose_name_plural = "Ответы"
 
 
-class AnswerStudent(models.Model):
-    name = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default=None)
-    test = models.ForeignKey(Test, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    quest = models.ForeignKey(Question, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Answer, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    status = models.BooleanField(null=False, blank=False, default=False)
-    session_key = models.CharField(max_length=128, blank=True, null=True, default=None)
-
-    def __str__(self):
-        return self.name.username
-
-    class Meta:
-        verbose_name = "Ответ студента"
-        verbose_name_plural = "Ответы студентов"
-
-
 class Result(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default=None)
     test = models.ForeignKey(Test, blank=True, null=True, default=None, on_delete=models.CASCADE)
@@ -92,3 +76,20 @@ class Result(models.Model):
     class Meta:
         verbose_name = "Результаты теста"
         verbose_name_plural = "Результаты тестов"
+
+
+class AnswerStudent(models.Model):
+    name = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    test = models.ForeignKey(Test, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    quest = models.ForeignKey(Question, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    status = models.BooleanField(null=False, blank=False, default=False)
+    session_key = models.CharField(max_length=128, blank=True, null=True, default=None)
+    # result = models.ForeignKey(Result, blank=True, null=True, default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name.username
+
+    class Meta:
+        verbose_name = "Ответ студента"
+        verbose_name_plural = "Ответы студентов"

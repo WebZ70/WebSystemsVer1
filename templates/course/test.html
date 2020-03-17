@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+
     <div class="section section-test">
         <div class="container">
             <form action="{% url 'test-rating' %} " method="POST" id="form-test">{% csrf_token %}
@@ -10,7 +11,7 @@
                     <div class="col-lg-12">
                         <div class="tabs">
                             <div class="tabs__content">
-                            <h2 class="text" data-test="{{ tests.pk }}">{{ tests.name_test }}</h2>
+                                <h2 class="text" data-test="{{ tests.pk }}">{{ tests.name_test }}</h2>
                                 {% for item in quests %}
                                     {% with num=forloop.counter %}
                                         {% if num == 1 %}
@@ -43,10 +44,10 @@
                                                                 data-answer="{{ quest_item.answer_text }}"
                                                                 data-test
                                                         >
-                                                    {{ quest_item.answer_text }}
+                                                        {{ quest_item.answer_text }}
                                                         {% if quest_item.image %}
                                                             <img height="75px" src="{% static quest_item.image.url %}">
-                                                    {% endif %}
+                                                        {% endif %}
 
                                                     </p>
                                                 {% endfor %}
@@ -59,16 +60,16 @@
                                 {% endfor %}
                                 </div>
                                 {# Кнопки навигации #}
-{#                                                                <div class="row justify-content-between">#}
-{#                                                                    <div class="col-md-3 ">#}
-{#                                                                        <button class="tabs__link btn btn-f my-btn"#}
-{#                                                                                href="#content-2">Назад</button>#}
-{#                                                                    </div>#}
-{#                                                                    <div class="col-md-3 ">#}
-{#                                                                        <button class="tabs__link btn btn-f my-btn"#}
-{#                                                                                href="#content-3">Далее</button>#}
-{#                                                                    </div>#}
-{#                                                                </div>#}
+                                {#                                                                <div class="row justify-content-between">#}
+                                {#                                                                    <div class="col-md-3 ">#}
+                                {#                                                                        <button class="tabs__link btn btn-f my-btn"#}
+                                {#                                                                                href="#content-2">Назад</button>#}
+                                {#                                                                    </div>#}
+                                {#                                                                    <div class="col-md-3 ">#}
+                                {#                                                                        <button class="tabs__link btn btn-f my-btn"#}
+                                {#                                                                                href="#content-3">Далее</button>#}
+                                {#                                                                    </div>#}
+                                {#                                                                </div>#}
                                 <div class="tabs__nav">
 
                                     {% for item in quests %}

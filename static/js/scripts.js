@@ -8,6 +8,8 @@ $(document).ready(function () {
     //value - ответ студента
 
     form.on('submit', function (e) {
+        $('.loader').fadeIn("slow", 'linear');
+
         e.preventDefault();
         var data = {};
         var submit_btn = $('#submit_btn');
@@ -34,6 +36,8 @@ $(document).ready(function () {
             cache: true,
             success: function (data) {
                 console.log("SUCCESS");
+                $(".loader_inner").fadeOut();
+                $(".loader").delay(500).fadeOut("slow", 'linear');
                 const btn = document.querySelector('.btn > span');
                 btn.innerHTML = "Результаты успешно отправлены"
 

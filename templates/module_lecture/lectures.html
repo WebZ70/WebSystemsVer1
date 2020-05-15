@@ -1,0 +1,29 @@
+{% extends 'base_materials.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="section section-lectures">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="text">Лекции</h2>
+                </div>
+                {% for item in lectures %}
+                    <div class="col-lg-3">
+                        <div class="course-item">
+                            <h4>{{ item.lecture.name_lecture }}</h4>
+                            <div class="description-item">{{ item.lecture.created }}</div>
+                            <div class="button-course">
+                                <a href="{% url 'page_lecture' item.lecture.id id_course %}"><button type="button" class="btn btn-outline-success">Ознакомиться</button></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

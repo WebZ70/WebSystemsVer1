@@ -1,0 +1,29 @@
+{% extends 'base_materials.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="section section-test">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="text">Тестовые задания</h2>
+                </div>
+                {% for item in tests %}
+                    <div class="col-lg-3">
+                        <div class="course-item">
+                            <h4>{{ item.test.name_test }}</h4>
+                            <div class="description-item"><p>Добавлен:</p> {{ item.test.created }}</div>
+                            <div class="button-course">
+                                <a href="{% url 'test' item.course.id 'test' item.test.id %}"><button type="button" class="btn btn-outline-success">Начать</button></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

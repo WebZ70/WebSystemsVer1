@@ -1,0 +1,29 @@
+{% extends 'base_materials.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="section section-task">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="text">Задания</h2>
+                </div>
+                {% for item in tasks %}
+                    <div class="col-lg-3">
+                        <div class="course-item">
+                            <h4>{{ item.task.name_task }}</h4>
+                            <div class="description-item">{{ item.task.created }}</div>
+                            <div class="button-course">
+                                <a href="{% url 'page_task' item.task.id id_course %}"><button type="button" class="btn btn-outline-success">Ознакомиться</button></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

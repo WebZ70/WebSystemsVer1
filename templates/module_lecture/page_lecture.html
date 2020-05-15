@@ -1,0 +1,29 @@
+{% extends 'base_materials.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="section section-lectures">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="text">{{ lecture.name_lecture }}</h2>
+                </div>
+                    {% for item in lecture.filelecture_set.all %}
+                        <div class="col-lg-3">
+                            <div class="course-item">
+                                <h4>Материал лекции "{{ lecture.name_lecture }}"</h4>
+                                <div class="description-item">{{ item.file.name }}</div>
+                                <div class="button-course">
+                                    <a href="{{ item.file.url }}" download>
+                                        <button type="button" class="btn btn-primary">Скачать</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

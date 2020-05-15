@@ -85,7 +85,6 @@ class AnswerStudent(models.Model):
     answer = models.ForeignKey(Answer, blank=True, null=True, default=None, on_delete=models.CASCADE)
     status = models.BooleanField(null=False, blank=False, default=False)
     session_key = models.CharField(max_length=128, blank=True, null=True, default=None)
-    # result = models.ForeignKey(Result, blank=True, null=True, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name.username

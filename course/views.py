@@ -6,6 +6,8 @@ from module_test.models import *
 from django.contrib.auth.decorators import login_required
 from .permissions import UserPermissionsMixin
 import re
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
 
 
 class CourseInUser(UserPermissionsMixin, generic.ListView):
@@ -14,6 +16,30 @@ class CourseInUser(UserPermissionsMixin, generic.ListView):
 
 class Home(generic.ListView):
     model = Course
+
+
+def task(request, id_course):
+    # this_course = Course.objects.get(id=pk)
+    tasks = TaskInCourse.objects.filter(task__taskincourse__course_id=id_course)
+    return render(request, 'module_task/tasks.html', locals())
+
+
+def tests(request, id_course):
+    # this_course = Course.objects.get(id=pk)
+    tests = TestInCourse.objects.filter(test__testincourse__course_id=id_course)
+    return render(request, 'module_test/tests.html', locals())
+
+
+def lecture(request, id_course):
+    # this_course = Course.objects.get(id=pk)
+    lectures = LectureInCourse.objects.filter(lecture__lectureincourse__course_id=id_course)
+    return render(request, 'module_lecture/lectures.html', locals())
+
+
+def base(request, pk):
+    id_course = pk
+
+    return render(request, 'base_materials.html', locals())
 
 
 class Course():
@@ -39,8 +65,11 @@ def home(request):
 
 def course(request, pk):
     # course = Course.objects.get(pk=pk)
+    id_course = pk
+    print(id_course)
     tests = TestInCourse.objects.filter(test__testincourse__course_id=pk)
-    return render(request, 'course/course.html', locals())
+    tasks = TaskInCourse.objects.filter(task__taskincourse__course_id=pk)
+    return render(request, 'module_lecture/lectures.html', locals())
 
 
 @login_required
@@ -142,3 +171,22 @@ def test_rating(request):
     result.save(force_update=True)
 
     return render(request, 'course/select_answer.html', locals())
+
+
+# registration views
+class RegisterFormView(FormView):
+    form_class = UserCreationForm
+
+    # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
+    # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.
+    success_url = "/"
+
+    # Шаблон, который будет использоваться при отображении представления.
+    template_name = "registration/register.html"
+
+    def form_valid(self, form):
+        # Создаём пользователя, если данные в форму были введены корректно.
+        form.save()
+
+        # Вызываем метод базового класса
+        return super(RegisterFormView, self).form_valid(form)
